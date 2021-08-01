@@ -1,21 +1,16 @@
 import Link from "next/link";
 import WorkSpaceTitle from "./WorkSpaceTitle";
+import { useSelector, useDispatch } from "react-redux";
 import useInput from "../../hooks/useInput"
 
-const projects = [{
-  _id:1322,
-  projectName:"StartingProject",
-  projectOwner:{userName:"Devansh"},
-  description:"Another description"
-}
-]
-const MainContainer = () => {
+const MainContainer = (props) => {
+  const projects = useSelector((state) => state.ProjectReducer);
+  const dispatch = useDispatch();
   const [username, userInput] = useInput({ type: "text" });
-  
   const addProject = () => {
     console.log("handeling this situation")
+    dispatch(addNewProject({projectName: username }));
   };
-  
   return (
     <div>
       <WorkSpaceTitle />
