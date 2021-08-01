@@ -1,7 +1,8 @@
 import Link from "next/link";
 import WorkSpaceTitle from "./WorkSpaceTitle";
 import { useSelector, useDispatch } from "react-redux";
-import useInput from "../../hooks/useInput"
+import useInput from "../../hooks/useinput"
+import { addNewProject } from "../../redux/actions/projectActions";
 
 const MainContainer = (props) => {
   const projects = useSelector((state) => state.ProjectReducer);
