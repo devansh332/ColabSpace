@@ -3,7 +3,7 @@ const navButtons = [
   {
     label: "Projects",
     path: "/workspace",
-    icon: "+",
+    icon: "",
     child:{
       
     }
@@ -11,12 +11,12 @@ const navButtons = [
   {
     label: "User Panel",
     path: "/workspace/user-panel",
-    icon: "-",
+    icon: "",
   },
   {
     label: "setting",
     path: "/workspace/setting",
-    icon: "=",
+    icon: "",
   },
 ];
 
