@@ -1,4 +1,4 @@
-import { projectURL } from "../config/configUrl";
+import { projectURL } from "../../client_apis/configUrl";
 import {
   GetProject,
   AddProject,

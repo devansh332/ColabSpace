@@ -1,6 +1,6 @@
 import React from "react";
 import NavButton from "./NavButton";
-import Styles from "../../../styles/Home.module.css";
+import Styles from "../../../styles/Home.module.scss";
 const SideNav = ({ navButtons }) => {
   return (
     <ul className={Styles.sidenavStaticList}>

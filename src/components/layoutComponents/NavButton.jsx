@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { withRouter } from "next/router";
-import Styles from "../../../styles/Home.module.css";
+import Styles from "../../../styles/Home.module.scss";
 
 const NavButton = ({ path, icon, label, router }) => (
   <Link href={path}>
