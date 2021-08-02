@@ -3,7 +3,7 @@ export const urlBackEnd = process.env.LOCAL_URL;
 class AuthAPI {
     constructor() {
         this.API = Axios.create({
-            baseURL: 'http://localhost:4000/api/v1',
+            baseURL: urlBackEnd,
         });
     }
 
