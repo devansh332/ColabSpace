@@ -20,7 +20,6 @@ const ProjectReducer = (state = initialState, action) => produce(state, draft =>
       draft.push(payload)
       return draft
     }
-
     case DELETE_PROJECT: {
       const index = draft.findIndex((project) => project._id === payload._id);
       return draft.splice(index, 1);

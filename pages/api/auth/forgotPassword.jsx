@@ -11,7 +11,6 @@ handler.post( async (req, res)=>{
   if(!user) return res.status(400).send(`Email doesn't exists`);
   const jwtToken = sign({email : req.body.email}, process.env.EMAIL_TOKEN, {expiresIn: "300000"} );
   mailerService(jwtToken,user.name).then((mailSent)=>{
-    console.log('===test===', mailSent);
     if(mailSent){
       res.status(200).send(`Email Sent`);
     }else{

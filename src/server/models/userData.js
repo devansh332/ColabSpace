@@ -1,6 +1,5 @@
 import mongoose, { Schema } from "mongoose";
 
-
 const MODEL_NAME = "users";
 
 const userBlock = new Schema({

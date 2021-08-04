@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "serve": "nodemon server/server.js"
+    "serve": "nodemon ExpressServer/server.js"
   },
   "dependencies": {
     "@hapi/joi": "^15.0.3",

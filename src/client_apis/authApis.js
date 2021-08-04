@@ -1,5 +1,6 @@
 import Axios from 'axios';
-export const urlBackEnd = process.env.LOCAL_URL;
+ // const urlBackEnd = process.env.LOCAL_URL;
+const urlBackEnd = 'http://localhost:3000/api';
 class AuthAPI {
     constructor() {
         this.API = Axios.create({
