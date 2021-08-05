@@ -1,9 +1,11 @@
 import { combineReducers } from "redux";
-import ProjectReducer from "./ProjectReducer";
+import WorkSpaceReducer from "./workspaceReducer";
+import ProjectReducer from "./projectReducer"
 import { HYDRATE } from "next-redux-wrapper";
 
 const combinedReducer = combineReducers({
-  ProjectReducer,
+  WorkSpaceReducer,
+  ProjectReducer
 });
 
 const rootReducer = (state, action) => {

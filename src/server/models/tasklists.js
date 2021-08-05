@@ -1,13 +1,15 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose, { Schema } from "mongoose";
 
-const MODEL_NAME = 'TaskLists';
+const MODEL_NAME = "TaskLists";
 
 const schema = new Schema({
-  taskListName:String,
-  tasks:[{
-      type:Schema.Types.ObjectId,
-      ref: "tasks"
-  }]
+  taskListName: String,
+  tasks: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Task",
+    },
+  ],
 });
 
 const Model = mongoose.models[MODEL_NAME] || mongoose.model(MODEL_NAME, schema);

@@ -8,5 +8,5 @@ export default function useInput({ type /*...*/ }) {
       type={type}
     />
   );
-  return [value, input];
+  return [value, input,setValue];
 }

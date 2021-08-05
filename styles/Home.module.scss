@@ -152,6 +152,9 @@
   font-size: 12px;
   text-transform: capitalize;
 }
+.taskList {
+  display: flex;
+}
 @media (max-width: 600px) {
   .grid {
     width: 100%;

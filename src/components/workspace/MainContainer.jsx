@@ -2,22 +2,25 @@ import Link from "next/link";
 import WorkSpaceTitle from "./WorkSpaceTitle";
 import { useSelector, useDispatch } from "react-redux";
 import useInput from "../../hooks/useinput"
-import { addNewProject } from "../../redux/actions/projectActions";
+import { addNewProject,deleteProject } from "../../redux/actions/workSpaceActions";
 
 const MainContainer = (props) => {
-  const projects = useSelector((state) => state.ProjectReducer);
+  const projects = useSelector((state) => state.WorkSpaceReducer.projects);
+  console.log("this is project",projects)
   const dispatch = useDispatch();
   const [username, userInput] = useInput({ type: "text" });
-  const addProject = () => {
-    console.log("handeling this situation")
-    dispatch(addNewProject({projectName: username }));
+  const addProjectHandler = () => {
+    dispatch(addNewProject({projectName: username,description:"this is description ",projectOwner:"61061e33bcc1803cf59e24c9" }));
   };
+  const deleteProjectHandler = (projectId) =>{
+    dispatch(deleteProject({projectId: projectId }));
+  }
   return (
     <div>
       <WorkSpaceTitle />
       <br />
       {userInput}
-      <button onClick={addProject}>nama</button>
+      <button onClick={addProjectHandler}>nama</button>
       <br />
       {projects.map((project) => {
         return (
@@ -26,8 +29,8 @@ const MainContainer = (props) => {
             <Link href={`workspace/project/${project._id}`}>
               <a>{`${project.projectName}`}</a>
             </Link>
+            <button onClick={()=>{deleteProjectHandler(project._id)}}>delete</button>
           </h1>
-          <span>by - {project.projectOwner.userName}</span>
           <br />
           <span>description - {project.description}</span>
           </>

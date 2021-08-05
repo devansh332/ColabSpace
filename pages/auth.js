@@ -43,7 +43,7 @@ export default function Authentication() {
                             formStatus={formSubmit}
                             setFormStatus={setFormSubmit}
                             regex={regex}
-                        />
+                        /> 
                     )}
                     {authState === 'SignUp' && (
                         <SignUpForm
