@@ -1,21 +1,19 @@
 import { verify } from 'jsonwebtoken'
 
-const jwtTokenCheck = async (req, res, next) => {
-    const token = req.header('auth-token');
+const jwtTokenCheck = async ({req, cookieToken}) => {
+    const token = req?.header('auth-token') || cookieToken;
 
     let myPromise = new Promise((resolve, reject)=> {
         if(!token) {
-            reject();
-            return res.status(501).send('Access Denied');
+            reject(false);
         }
         try{
-            req.user = verify(token, process.env.SECRET_TOKEN);
+            req.user = verify(token, process.env.REACT_APP_SECRET_TOKEN);
 
             resolve(true);
         }
         catch(error){
-            res.status(400).send('Invalid Token');
-            reject();
+            reject(false);
         }
     });
     return await myPromise;
