@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import AuthAPI from "../../client_apis/authApis";
+import cookie from "js-cookie"
 
 export default function SignInForm(props) {
     const Auth = new AuthAPI();
@@ -22,6 +23,7 @@ export default function SignInForm(props) {
                     error: false,
                     submitting: false,
                 });
+                cookie.set('token', response['auth-token']);
             })
             .catch(error => {
                 props.setFormStatus({

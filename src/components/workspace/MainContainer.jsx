@@ -16,6 +16,7 @@ const MainContainer = (props) => {
     <div>
       <WorkSpaceTitle />
       <br />
+        {props.tokenTest}
       {userInput}
       <button onClick={addProject}>name</button>
       <br />

@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 // Get your connection string from .env.local
 
-// const MONGODB_CONN_STR = process.env.MONGODB_URI;
-const MONGODB_CONN_STR = `mongodb+srv://root:root@cluster0.og5db.mongodb.net/Global_Data?retryWrites=true&w=majority`;
+
+const MONGODB_CONN_STR = process.env.REACT_APP_DB_connection;
 
 const databaseMiddleware = async (req, res, next) => {
   try {

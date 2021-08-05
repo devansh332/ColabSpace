@@ -17,7 +17,6 @@ export const AddTaskList = (data) => ({
 
 export const DeleteTaskList = (data) => ({
   type: DELETE_TASK_LIST,
-
   payload: data,
 });
 export const GetAllTaskList = (data) => ({
