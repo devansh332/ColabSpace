@@ -7,6 +7,9 @@ export const GET_PROJECT_INFO = "GET_PROJECT_INFO";
 export const GET_ALL_TASKS = "GET_ALL_TASKS";
 export const ERROR_PROJECT = "ERROR_PROJECT";
 export const CREATE_TASK  = "CREATE_TASK"
+export const CHANGE_TASK_ORDER  = "CHANGE_TASK_ORDER"
+export const MOVE_TASK  = "MOVE_TASK"
+export const DELETE_TASK  = "DELETE_TASK"
 export const LOADING = "LOADING"
 
 export const UpdateProject = (data) => ({
@@ -42,6 +45,27 @@ export const ErrorProject = (error) => {
 export const CreateTask = (data) => {
   return {
     type: CREATE_TASK,
+    payload:data
+  };
+};
+
+export const DeleteTask = (data) => {
+  return {
+    type: DELETE_TASK,
+    payload:data
+  };
+};
+
+export const ChangeTaskOrder = (data) => {
+  return {
+    type: CHANGE_TASK_ORDER,
+    payload:data
+  };
+};
+
+export const MoveTask = (data) => {
+  return {
+    type: MOVE_TASK,
     payload:data
   };
 };

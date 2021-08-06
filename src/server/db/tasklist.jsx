@@ -17,16 +17,10 @@ export async function getTaskList(taskListId, projection = "", populate = "") {
     .populate("tasks");
   console.log(taskLists);
   return taskLists;
-}
-createTask;
+};
 
-export async function createTask(task, projection = "", populate = "") {
-  task.taskListId = Types.ObjectId(task.taskListId);
-  console.log("task", task);
-  const newTask = new Task(task);
-  let saveNewTask = await newTask.save();
-  return saveNewTask;
-}
+
+
 // export async function insertTask(task) {
 //   console.log("this is lala", task);
 //   project.projectOwner = Types.ObjectId(project.projectOwner);

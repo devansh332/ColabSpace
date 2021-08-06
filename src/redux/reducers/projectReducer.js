@@ -6,6 +6,9 @@ import {
   LOADING,
   UPDATE_PROJECT,
   CREATE_TASK,
+  CHANGE_TASK_ORDER,
+  MOVE_TASK,
+  DELETE_TASK,
 } from "../constants/projectActionConstants";
 import produce, { original } from "immer";
 
@@ -13,6 +16,15 @@ export const initialState = {
   projectInfo: {},
   loading: true,
 };
+
+function move(input, from, to) {
+  let numberOfDeletedElm = 1;
+  const elm = input.splice(from, numberOfDeletedElm)[0];
+  numberOfDeletedElm = 0;
+  input.splice(to, numberOfDeletedElm, elm);
+  return input
+}
+
 
 const ProjectReducer = (state = initialState, action) => {
   return produce(state, (draft) => {
@@ -33,7 +45,6 @@ const ProjectReducer = (state = initialState, action) => {
         break;
       }
       case CREATE_TASK:{
-        debugger
         const index = draft.projectInfo.taskLists.findIndex((tasklist)=>{return tasklist._id === payload.taskListId})
         console.log("this is index",index)
         draft.projectInfo.taskLists[index].task.push(payload)
@@ -45,13 +56,38 @@ const ProjectReducer = (state = initialState, action) => {
         delete newDraft[1];
         return newDraft;
       }
+      case DELETE_TASK: {
+        const taskListindex = draft.projectInfo.taskLists.findIndex((tasklist)=>{return tasklist._id === payload.taskListId})
+        const taskIndex = draft.projectInfo.taskLists[taskListindex].task.findIndex((task) => {return task._id === payload.taskId})
+        draft.projectInfo.taskLists[taskListindex].task.splice(taskIndex,1)
+        break;
+      }
+      
       case GET_PROJECT_INFO: {
         draft.projectInfo = payload;
+        break
+      }
+      case CHANGE_TASK_ORDER :{
+        const {initialIndex,finalIndex,taskListId} = payload
+        const index = draft.projectInfo.taskLists.findIndex((tasklist)=>{return tasklist._id === taskListId})
+        const new_draft  = draft.projectInfo.taskLists[index].task.splice(initialIndex,1)[0]
+        draft.projectInfo.taskLists[index].task.splice(finalIndex, 0, new_draft);
+        break;
+      }
+      case MOVE_TASK:{
+        const {initialIndex,finalIndex,sourceTaskListId,destinationTaskListId} = payload
+        const sourceIndex = draft.projectInfo.taskLists.findIndex((tasklist)=>{return tasklist._id === sourceTaskListId})
+        const destinationIndex = draft.projectInfo.taskLists.findIndex((tasklist)=>{return tasklist._id === destinationTaskListId})
+        const item = draft.projectInfo.taskLists[sourceIndex].task[initialIndex]
+        draft.projectInfo.taskLists[sourceIndex].task.splice(initialIndex,1)
+        draft.projectInfo.taskLists[destinationIndex].task.splice(finalIndex, 0, item);
+        break;
       }
       case ERROR_PROJECT: {
         return draft;
       }
       default: {
+        return draft  
       }
     }
   });
