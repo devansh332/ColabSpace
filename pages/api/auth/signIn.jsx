@@ -16,9 +16,9 @@ handler.post( async (req, res)=>{
   if(!user) return res.status(400).send(`Email doesn't exists`);
 
   const validPassword = await compare(req.body.password, user.password)
-  if(!validPassword) return res.status(400).send(`Invalid Password ${user.password} `);
+  if(!validPassword) return res.status(400).send(`Invalid Password`);
 
-  const jwtToken = sign({_id : user._id}, process.env.SECRET_TOKEN );
+  const jwtToken = sign({_id : user._id}, process.env.REACT_APP_SECRET_TOKEN );
   res.json({
     name : user.name,
     email: user.email,

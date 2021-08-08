@@ -155,6 +155,12 @@ form{
   position: relative;
   padding: 20px 0;
   width: 350px;
+
+  &.sent{
+    .forgot-message{
+      display: flex;
+    }
+  }
 }
 
 input {
@@ -165,6 +171,18 @@ input {
   border: 1px solid #ccc;
   font-family: inherit;
 }
+  .forgot-message{
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    text-align: center;
+  }
 }
 
 h2 {

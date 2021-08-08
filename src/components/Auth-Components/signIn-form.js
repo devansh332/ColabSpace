@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import AuthAPI from "../../client_apis/authApis";
+import { useRouter } from "next/router";
+import cookie from "js-cookie"
 
 export default function SignInForm(props) {
     const Auth = new AuthAPI();
@@ -7,6 +9,7 @@ export default function SignInForm(props) {
         email: '',
         password: '',
     });
+    const router = useRouter();
 
     // useEffect(()=>{
     //     // console.log(props.formStatus);
@@ -22,6 +25,9 @@ export default function SignInForm(props) {
                     error: false,
                     submitting: false,
                 });
+                cookie.set('token', response['auth-token']);
+                console.log('===test===',response['auth-token']);
+                router.push('/workspace');
             })
             .catch(error => {
                 props.setFormStatus({
@@ -42,7 +48,7 @@ export default function SignInForm(props) {
                            if(!props.regex.emailRegex.test(e.target.value)){
                                props.setFormStatus({ ...props.formStatus, error: 'Enter a valid email address'})
                            } else{
-                               setFormData({ ...formData, email: e.target.value });
+                               setFormData({ ...formData, email: e.target.value.toLowerCase() });
                                props.setFormStatus({...props.formStatus, formTouched: true, error: false });
                            }
                        }

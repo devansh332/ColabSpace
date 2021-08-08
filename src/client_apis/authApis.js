@@ -1,9 +1,9 @@
 import Axios from 'axios';
-export const urlBackEnd = process.env.LOCAL_URL;
+export const urlBackEnd = process.env.REACT_APP_LOCAL_URL;
 class AuthAPI {
     constructor() {
         this.API = Axios.create({
-            baseURL: urlBackEnd,
+            baseURL: 'http://localhost:3000/api',
         });
     }
 

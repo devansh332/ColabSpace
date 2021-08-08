@@ -26,7 +26,7 @@ handler.post( async (req, res)=>{
 
   try {
     const newEntry = await newData.save();
-    const jwtToken = sign({_id : newData._id}, process.env.SECRET_TOKEN );
+    const jwtToken = sign({_id : newData._id}, process.env.REACT_APP_SECRET_TOKEN );
     res.json({
       name : newEntry.name,
       email: newEntry.email,

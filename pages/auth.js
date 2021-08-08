@@ -3,13 +3,14 @@ import SignInForm from "../src/components/Auth-Components/signIn-form";
 import SignUpForm from "../src/components/Auth-Components/signUp-form";
 import ForgotPasswordForm from "../src/components/Auth-Components/forgotPassword-form";
 import {getLayout as getEmptyLayout} from "../src/components/layouts/EmptyLayout";
+import cookie from "js-cookie"
 
 
 export default function Authentication() {
 
     const regex = {
         emailRegex: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i,
-        nameRegex: '^([a-zA-Z]+( [a-zA-Z]+)|[a-zA-Z]){2,50}$',
+        nameRegex: /^([a-zA-Z]+( [a-zA-Z]+)|[a-zA-Z]){2,50}$/,
     }
     const [authState, setAuthState] = useState('SignUp');
     const [stateChanging, setStateChanging] = useState(false);
@@ -31,6 +32,7 @@ export default function Authentication() {
             })
         }, 1000);
     }
+    cookie.remove('token');
 
     return (
         <section className={`container ${stateChanging ? 'stop' : 'active'}`}>

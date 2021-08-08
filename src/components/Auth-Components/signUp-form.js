@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import AuthAPI from "../../client_apis/authApis";
+import {useRouter} from "next/router";
+import cookie from "js-cookie"
 
 export default function SignUpForm(props) {
 
@@ -9,10 +11,10 @@ export default function SignUpForm(props) {
         email: '',
         password: '',
     });
+    const router = useRouter();
 
     useEffect(()=>{
-        console.log(props.formStatus);
-    },[props.formStatus]);
+    },[]);
 
     function submit() {
         props.setFormStatus({
@@ -24,6 +26,8 @@ export default function SignUpForm(props) {
                     error: false,
                     submitting: false,
                 });
+                cookie.set('token', response['auth-token']);
+                router.push('/workspace');
             })
             .catch(error => {
                 props.setFormStatus({
@@ -51,7 +55,7 @@ export default function SignUpForm(props) {
             <input type="email" placeholder="Email"
                    onKeyUp={e => {
                        if (e.charCode !== 13) {
-                           if(!props.regex.emailRegex.test(e.target.value)){
+                           if(!props.regex.emailRegex.test(e.target.value.toLowerCase())){
                                props.setFormStatus({ ...props.formStatus, error: 'Enter a valid email address'})
                            } else{
                                setFormData({ ...formData, email: e.target.value });
@@ -59,7 +63,13 @@ export default function SignUpForm(props) {
                            }
                        }
                    }}/>
-            <input type="password" placeholder="Password" />
+            <input type="password" placeholder="Password"
+                   onKeyUp={e => {
+                if (e.charCode !== 13) {
+                    setFormData({ ...formData, password: e.target.value });
+                    props.setFormStatus({...props.formStatus, formTouched: true, error: false });
+                }
+            }} />
             <div className="bottom-row">
                 <span className={`btn ${!props.formStatus.formTouched || !!props.formStatus.error || props.formStatus.submitting? 'disable':''}`} onClick={submit}>SignUp</span>
 

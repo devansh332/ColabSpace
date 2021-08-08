@@ -42,7 +42,7 @@ const ProjectPage = () => {
         },
       });
     }
-    if (result.destination.droppableId != result.source.droppableId) {
+    if (result.destination.droppableId !== result.source.droppableId) {
       dispatch(
         moveTaskAction({
           taskId:result.draggableId,
