@@ -1,5 +1,6 @@
 import "../styles/globals.css";
 import SiteLayout from "../src/components/Layouts/SiteLayout";
+import { wrapper } from "../src/redux/store";
 
 function MyApp({ Component, pageProps }) {
   const getLayout =
@@ -8,4 +9,4 @@ function MyApp({ Component, pageProps }) {
   return getLayout(<Component {...pageProps} />);
 }
 
-export default MyApp;
+export default wrapper.withRedux(MyApp);

@@ -119,12 +119,22 @@
   height: 100vh;
 }
 
-.sitelayout li {
-  list-style-type: none;
-}
 .sidenavStaticList {
   width: 20vw;
   list-style-type: none;
+  display: flex;
+  background: rgb(201, 235, 248);
+  padding: 0;
+  flex-direction: column;
+  justify-content: center
+}
+.sidenavStaticList li{
+  
+  border: 1px solid rgb(255, 255, 255);
+  box-shadow: 1px;
+  
+  height:4.6vh;
+  
 }
 .NavButton {
   display: flex;
