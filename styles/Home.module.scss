@@ -113,6 +113,89 @@
   margin-left: 0.5rem;
 }
 
+.sitelayout {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+}
+
+.sidenavStaticList {
+  width: 20vw;
+  list-style-type: none;
+  display: flex;
+  background: rgb(201, 235, 248);
+  padding: 0;
+  flex-direction: column;
+  justify-content: center
+}
+.sidenavStaticList li{
+  
+  border: 1px solid rgb(255, 255, 255);
+  box-shadow: 1px;
+  
+  height:4.6vh;
+  
+}
+.NavButton {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  height: 100%;
+  cursor: pointer;
+}
+.NavButton .Icon {
+  font-size: 20px;
+}
+
+.NavButton .Label {
+  font-size: 12px;
+  text-transform: capitalize;
+}
+.projectPage{
+  width: 100vw;
+}
+.taskList {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-left: 10px;
+  background-color: rgb(241, 241, 241);
+  flex-grow: 1;
+  min-height: 300px;
+}
+.taskListColored {
+  background-color: lightblue;
+  flex-grow: 1;
+  min-height: 300px;
+}
+.task {
+  display: flex;
+  justify-content: space-between  ;
+  width: 200px;
+  border: 1px solid grey;
+  margin-bottom: 3px;
+  background-color: lightblue;
+  padding: 3px;
+}
+.Coloredtask{
+  width: 200px;
+  border: 1px solid grey;
+  margin-bottom: 3px;
+  background-color: rgb(173, 230, 190);
+  padding: 3px;
+}
+.taskListContainer{
+  display: flex;
+  margin: 30px;
+  min-height: 40vh;
+}
+
+.cardheader {
+  display: flex;
+  justify-content: space-between;
+}
 @media (max-width: 600px) {
   .grid {
     width: 100%;
