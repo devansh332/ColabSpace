@@ -1,12 +1,12 @@
 import React from "react";
 import SideNav from "../layoutComponents/SideNav";
-import Style from "../../../styles/Home.module.scss";
+import Style from "../../../styles/siteLayout.module.scss";
 import navButtons from "./config/NavButtonConfig";
 
-const SiteLayout = ({ isSideNavBar = true, children }) => {
+const SiteLayout = ({ children }) => {
   return (
     <div className={Style.sitelayout}>
-      {isSideNavBar ? <SideNav navButtons={navButtons} /> : null}
+      <SideNav navButtons={navButtons} />
       {children}
     </div>
   );

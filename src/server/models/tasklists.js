@@ -2,16 +2,26 @@ import mongoose, { Schema } from "mongoose";
 
 const MODEL_NAME = "TaskLists";
 
-const schema = new Schema({
+const TaskListschema = new Schema({
   taskListName: String,
-  tasks: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Task",
-    },
-  ],
+  projectId:{
+    type: Schema.Types.ObjectId,
+    ref: "Projects",
+  },
 });
 
-const Model = mongoose.models[MODEL_NAME] || mongoose.model(MODEL_NAME, schema);
+TaskListschema.post("findOneAndDelete", async function (doc) {
+  console.log(doc);
+
+  if (doc) {
+    const deleteResult = await mongoose.models["Task"].deleteMany({
+      taskListId: doc._id,
+    });
+
+    console.log("Child delete result: ", deleteResult);
+  }
+});
+
+const Model = mongoose.models[MODEL_NAME] || mongoose.model(MODEL_NAME, TaskListschema);
 
 export default Model;

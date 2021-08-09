@@ -8,7 +8,7 @@ import Task from "../models/tasks";
 import Comments from "../models/comments";
 import { model, Types } from "mongoose";
 
-export async function getAllProjects(
+export async function getProjectsInfo(
   projection = "projectName description",
   populate = ""
 ) {
@@ -44,7 +44,10 @@ export async function getProject(projectId, projection = "", populate = "") {
       },
     },
     {
-      $unwind: "$taskListLookups",
+      $unwind: {
+        path: "$taskListLookups",
+        preserveNullAndEmptyArrays: true,
+      },
     },
     {
       $lookup: {
@@ -65,7 +68,10 @@ export async function getProject(projectId, projection = "", populate = "") {
       },
     },
     {
-      $unwind: "$taskLookups",
+      $unwind: {
+        path: "$taskLookups",
+        preserveNullAndEmptyArrays: true,
+      },
     },
     {
       $group: {
@@ -92,7 +98,7 @@ export async function getProject(projectId, projection = "", populate = "") {
         _id: "$id",
         taskLists: {
           $addToSet: {
-            _id:"$_id",
+            _id: "$_id",
             taskListName: "$taskListName",
             task: "$tasks",
           },
@@ -109,6 +115,16 @@ export async function getProject(projectId, projection = "", populate = "") {
       },
     },
     {
+      $addFields:{
+        "taskLists":{
+          $filter:{
+            "input":"$taskLists",
+            "cond": { "$ifNull": ["$$this._id", false] }
+          }
+        }
+      }
+    },
+    {
       $project: {
         id: 0,
       },
@@ -118,10 +134,9 @@ export async function getProject(projectId, projection = "", populate = "") {
   return Project[0];
 }
 export async function insertProject(project) {
-  console.log("this is lala", project);
   project.projectOwner = Types.ObjectId(project.projectOwner);
   const newProject = new Projects(project);
-  let saveNewProject = await newProject.save();
+  const saveNewProject = await newProject.save();
   console.log(saveNewProject);
   return saveNewProject;
 }
@@ -129,5 +144,14 @@ export async function insertProject(project) {
 export async function deleteProject(projectId) {
   console.log("thishis", projectId);
   const foundProjectInfo = Projects.findOneAndDelete({ _id: projectId });
+  return foundProjectInfo;
+}
+
+export async function updateProject(projectInfo) {
+  const foundProjectInfo = Projects.findOneAndUpdate(
+    { _id: projectId },
+    projectInfo,
+    { upsert: true }
+  );
   return foundProjectInfo;
 }

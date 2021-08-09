@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { withRouter } from "next/router";
-import Styles from "../../../styles/Home.module.scss";
+import Styles from "../../../styles/siteLayout.module.scss";
 
 const NavButton = ({ path, icon, label, router }) => (
   <Link href={path}>
@@ -9,8 +9,10 @@ const NavButton = ({ path, icon, label, router }) => (
         router.pathname === path ? "active" : ""
       }`}
     >
-      <span className={Styles.NavButton.icon}>{icon}</span>
-      <span className={Styles.NavButton.label}>{label}</span>
+      <div className={Styles.NavButton.iconcontianer}>
+        <span className={Styles.NavButton.icon}>{icon}</span>
+        <span className={Styles.NavButton.label}>{label}</span>
+      </div>
     </div>
   </Link>
 );

@@ -3,6 +3,7 @@ import {
   deleteProject,
   getProject,
   insertProject,
+  updateProject,
 } from "../../../src/server/db";
 import { createHandler } from "../../../src/server/middleware";
 //import { middleware as handler} from "../../../middleware/database";

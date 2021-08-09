@@ -1,5 +1,5 @@
 import nextConnect from "next-connect";
-import { deleteProject, getAllProjects, insertProject } from "../../../src/server/db";
+import { deleteProject, getProjectsInfo, insertProject } from "../../../src/server/db";
 import { createHandler } from "../../../src/server/middleware";
 //import { middleware as handler} from "../../../middleware/database";
 
@@ -9,7 +9,7 @@ import { createHandler } from "../../../src/server/middleware";
 const handler = createHandler(); 
 
 handler.get(async (req, res) => {
-  const projects = await getAllProjects();
+  const projects = await getProjectsInfo();
   res.send({ projects });
 });
 

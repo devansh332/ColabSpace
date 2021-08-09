@@ -11,7 +11,7 @@ export const getWorkspaceProject = () => async (dispatch, getState) => {
   // getState is to collect data from current state from store
   try {
     await projectURL
-      .get("/")
+      .get()
       .then((response) => {
         dispatch(GetAllProject(response.data.projects));
       })

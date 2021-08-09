@@ -7,8 +7,9 @@ import {
   getAllTasks,
   createNewTask,
   deleteTask,
+  deleteTaskList,
 } from "../../redux/actions/projectPageActions";
-import useInput from "../../hooks/useinput";
+import useInput from "../../hooks/useInput";
 
 import styles from "../../../styles/Home.module.scss";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
@@ -19,6 +20,7 @@ function TaskList({ tasklist }) {
   const { loading } = projectInfo;
   const [taskName, userInput] = useInput({ type: "text" });
   const { _id, taskListName, task } = tasklist;
+  const taskListId = _id
   const getStatusStyle = (isDraggingOver) => ({
     background: isDraggingOver ? "#00BFFF" : "",
   });
@@ -41,6 +43,10 @@ function TaskList({ tasklist }) {
     );
   };
 
+  const deleteTaskListHandler = (taskListId) =>{
+    dispatch(deleteTaskList({taskListId:taskListId}))
+  }
+
   return (
     <Droppable droppableId={tasklist._id}>
       {(provided, snapshot) => (
@@ -51,24 +57,32 @@ function TaskList({ tasklist }) {
         >
           <div className={styles.cardheader}>
             <h5>{taskListName}</h5>
-            <h6>{task.length > 0 ? task.length : ""}</h6>
+            <h6>{task && task.length > 0 ? task.length : ""}</h6>
+            <button
+              onClick={() => {
+                deleteTaskListHandler(taskListId);
+              }}
+            >
+              x
+            </button>
+
           </div>
           <div>
             {userInput}
             <button
               onClick={() => {
-                addTaskHandler(_id);
+                addTaskHandler(taskListId);
               }}
             >
-              nama
+              name
             </button>
           </div>
 
-          {task.map((taskin, index) => {
+          {task && task.map((taskin, index) => {
             return (
               <Task
                 key={taskin._id}
-                taskListId={_id}
+                taskListId={taskListId}
                 deleteTaskHandler={deleteTaskHandler}
                 index={index}
                 task={taskin}

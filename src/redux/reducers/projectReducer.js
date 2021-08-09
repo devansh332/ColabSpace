@@ -9,6 +9,8 @@ import {
   CHANGE_TASK_ORDER,
   MOVE_TASK,
   DELETE_TASK,
+  CREATE_TASK_LIST,
+  DELETE_TASK_LIST,
 } from "../constants/projectActionConstants";
 import produce, { original } from "immer";
 
@@ -46,8 +48,13 @@ const ProjectReducer = (state = initialState, action) => {
       }
       case CREATE_TASK:{
         const index = draft.projectInfo.taskLists.findIndex((tasklist)=>{return tasklist._id === payload.taskListId})
-        console.log("this is index",index)
-        draft.projectInfo.taskLists[index].task.push(payload)
+        console.log("this is index",index ,original(draft).projectInfo.taskLists[index].hasOwnProperty('task') )
+        if (index != -1 ) draft.projectInfo.taskLists[index].task.push(payload)
+        break;
+      }
+      case CREATE_TASK_LIST:{
+        payload.task =[]
+        draft.projectInfo.taskLists.push(payload)
         break;
       }
 
@@ -63,9 +70,14 @@ const ProjectReducer = (state = initialState, action) => {
         break;
       }
       
+      case DELETE_TASK_LIST:{
+        const taskListindex = draft.projectInfo.taskLists.findIndex((tasklist)=>{return tasklist._id === payload.taskListId})
+        draft.projectInfo.taskLists.splice(taskListindex,1)
+        break;
+      }
       case GET_PROJECT_INFO: {
         draft.projectInfo = payload;
-        break
+        break;
       }
       case CHANGE_TASK_ORDER :{
         const {initialIndex,finalIndex,taskListId} = payload

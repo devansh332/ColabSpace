@@ -1,41 +1,66 @@
 import Link from "next/link";
 import WorkSpaceTitle from "./WorkSpaceTitle";
 import { useSelector, useDispatch } from "react-redux";
-import useInput from "../../hooks/useinput"
-import { addNewProject,deleteProject } from "../../redux/actions/workSpaceActions";
-
+import useInput from "../../hooks/useInput";
+import {
+  addNewProject,
+  deleteProject,
+} from "../../redux/actions/workSpaceActions";
+import Styles from "../../../styles/mainContainer.module.scss";
 const MainContainer = (props) => {
   const projects = useSelector((state) => state.WorkSpaceReducer.projects);
-  console.log("this is project",projects)
+  console.log("this is project", projects);
   const dispatch = useDispatch();
   const [username, userInput] = useInput({ type: "text" });
   const addProjectHandler = () => {
-    dispatch(addNewProject({projectName: username,description:"this is description ",projectOwner:"61061e33bcc1803cf59e24c9" }));
+    dispatch(
+      addNewProject({
+        projectName: username,
+        description: "this is description ",
+        projectOwner: "61061e33bcc1803cf59e24c9",
+      })
+    );
   };
-  const deleteProjectHandler = (projectId) =>{
-    dispatch(deleteProject({projectId: projectId }));
-  }
+  const deleteProjectHandler = (projectId) => {
+    dispatch(deleteProject({ projectId: projectId }));
+  };
   return (
-    <div>
+    <div className={Styles.maincontainerbody}>
       <WorkSpaceTitle />
-      <br />
-      {userInput}
-      <button onClick={addProjectHandler}>nama</button>
-      <br />
-      {projects.map((project) => {
-        return (
-          <>
-          <h1 key={project._id}>
-            <Link href={`workspace/project/${project._id}`}>
-              <a>{`${project.projectName}`}</a>
-            </Link>
-            <button onClick={()=>{deleteProjectHandler(project._id)}}>delete</button>
-          </h1>
-          <br />
-          <span>description - {project.description}</span>
-          </>
-        );
-      })}
+      <div className="add-project">
+        {userInput}
+        <button onClick={addProjectHandler}>name</button>
+      </div>
+      <div className={Styles.userprojects}>
+        {projects.map((project) => {
+          return (
+            <div className={Styles.project_card}>
+              <div className={Styles.project_card_container}>
+                <div className={Styles.projectheading}>
+                  <h1 key={project._id}>
+                    <Link href={`workspace/project/${project._id}`}>
+                      <a>{`${project.projectName}`}</a>
+                    </Link>
+                  </h1>
+                  <div className={Styles.deletproject}>
+                    <button
+                      onClick={() => {
+                        deleteProjectHandler(project._id);
+                      }}
+                    >
+                      X
+                    </button>
+                  </div>
+                </div>
+
+                <div className="project-description">
+                  <p>{project.description.length > 10 ? project.description.slice(0,20)+"..." : project.description }</p>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };

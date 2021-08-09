@@ -8,24 +8,22 @@ import Task from "../models/tasks";
 import Comments from "../models/comments";
 import { model, Types } from "mongoose";
 
-export async function getTaskList(taskListId, projection = "", populate = "") {
-  const taskLists = await TaskLists.find(
-    { projectId: Types.ObjectId(taskListId) },
-    projection
-  )
-    .lean()
-    .populate("tasks");
-  console.log(taskLists);
+export async function getTaskList(taskListInfo) {
+  const taskLists = await TaskLists.find({
+    _id: Types.ObjectId(taskListInfo.taskListId),
+  });
   return taskLists;
-};
+}
 
+export async function createTaskList(taskListInfo) {
+  const newTaskList = new TaskLists(taskListInfo);
+  const saveNewTaskLIst = await newTaskList.save();
+  return saveNewTaskLIst;
+}
 
-
-// export async function insertTask(task) {
-//   console.log("this is lala", task);
-//   project.projectOwner = Types.ObjectId(project.projectOwner);
-//   const newProject = new Projects(project);
-//   let saveNewProject = await newProject.save();
-//   console.log(saveNewProject);
-//   return saveNewProject;
-// }
+export async function deleteTaskList(taskListInfo) {
+  const deletedTaskListId = await TaskLists.findOneAndDelete({
+    _id: taskListInfo.taskListId,
+  });
+  return deletedTaskListId;
+}

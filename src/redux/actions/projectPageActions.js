@@ -1,4 +1,4 @@
-import { projectURL, taskListURL } from "../../client_apis/configUrl";
+import { projectURL, taskListURL, taskURL } from "../../client_apis/configUrl";
 import {
   GetProjectInfo,
   ErrorProject,
@@ -7,6 +7,8 @@ import {
   CreateTask,
   DeleteTask,
   MoveTask,
+  CreateTaskList,
+  DeleteTaskList
 } from "../constants/projectActionConstants";
 import axios from "axios";
 export const getProjectInfo = (projectId) => async (dispatch, getState) => {
@@ -24,28 +26,31 @@ export const getProjectInfo = (projectId) => async (dispatch, getState) => {
   } catch {}
 };
 
-export const getAllTasksList = (taskListId) => async (dispatch) => {
-
-  let response = await axios.get(
-    `http://localhost:3000/api/taskList/${taskListId}`
-  );
-  if (response) {
-    console.log(response);
-    dispatch(GetAllTasks(response.data));
-  }
-};
+// export const getAllTasksList = (taskListId) => async (dispatch) => {
+//   let response = await taskListURL.get(`/${taskListId}`);
+//   if (response) {
+//     console.log(response);
+//     dispatch(GetAllTasks(response.data));
+//   }
+// };
 
 export const createNewTask = (taskInfo) => async (dispatch) => {
   const { taskListId } = taskInfo;
-  let response = await axios.post(
-    `http://localhost:3000/api/taskList/${taskListId}`,
-    taskInfo
-  );
+  let response = await taskURL.post("", taskInfo);
   if (response) {
     console.log(response.data);
     dispatch(CreateTask(response.data));
   }
 };
+
+export const createNewTaskList = (taskListInfo) => async (dispatch) => {
+  let response = await taskListURL.post("", taskListInfo);
+  if (response) {
+    console.log(response.data);
+    dispatch(CreateTaskList(response.data));
+  }
+};
+
 
 export const deleteProject = (projectId) => async (dispatch) => {
   let response = await projectURL.delete("/", {
@@ -59,33 +64,28 @@ export const deleteProject = (projectId) => async (dispatch) => {
 };
 
 export const deleteTask = (taskInfo) => async (dispatch) => {
-  const { taskListId } = taskInfo;
-  let response = await axios.delete(
-    `http://localhost:3000/api/taskList/${taskListId}`,
-    {data:taskInfo}
-  );
-  // let response = await taskListURL.delete("", {
-  //   data: taskInfo,
-  // });
-  console.log("response", response);
+  let response = await taskURL.delete("", { data: taskInfo });
+
   if (response) {
-    console.log(response);
     dispatch(DeleteTask(taskInfo));
   }
 };
 
+export const deleteTaskList = (taskListInfo) => async (dispatch) => {
+  let response = await taskListURL.delete("", { data: taskListInfo });
+
+  if (response) {
+    dispatch(DeleteTaskList(taskListInfo));
+  }
+};
+
+
 export const moveTaskAction = (taskInfo) => async (dispatch) => {
   const { sourceTaskListId } = taskInfo;
-  let response = await axios.put(
-    `http://localhost:3000/api/taskList/${sourceTaskListId}/move`,
-    {data:taskInfo}
-  );
-  // let response = await taskListURL.delete("", {
-  //   data: taskInfo,
-  // });
-  console.log("response", response);
+  let response = await taskListURL.put(`/${sourceTaskListId}/move`, {
+    data: taskInfo,
+  });
   if (response) {
-    console.log(response);
     dispatch(MoveTask(taskInfo));
   }
 };
